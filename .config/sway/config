@@ -1,0 +1,179 @@
+# Windows+Shift key. If windows key is used alone, doing Win+L on Windows (Linux VM) will cause the lock screen to activate.
+set $mod Mod4+shift
+# Alt key
+set $mod2 Mod1
+# Ctrl key
+set $mod3 Ctrl
+
+floating_modifier Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
+font pango:monospace 12
+
+# Hotkeys
+## Focus window in workspace
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Tab focus right
+bindsym $mod+$mod2+Tab focus left
+
+## Move focused window in workspace
+bindsym $mod+$mod2+h move left
+bindsym $mod+$mod2+j move down
+bindsym $mod+$mod2+k move up
+bindsym $mod+$mod2+l move right
+
+## Focus workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+## Move focused window to workspace
+bindsym $mod+$mod2+1 move container to workspace 1
+bindsym $mod+$mod2+2 move container to workspace 2
+bindsym $mod+$mod2+3 move container to workspace 3
+bindsym $mod+$mod2+4 move container to workspace 4
+bindsym $mod+$mod2+5 move container to workspace 5
+bindsym $mod+$mod2+6 move container to workspace 6
+bindsym $mod+$mod2+7 move container to workspace 7
+bindsym $mod+$mod2+8 move container to workspace 8
+bindsym $mod+$mod2+9 move container to workspace 9
+bindsym $mod+$mod2+0 move container to workspace 10
+
+## Tiling
+bindsym $mod+x split h
+bindsym $mod+y split v
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+## Floating / fullscreen
+bindsym $mod+f fullscreen toggle
+# toggle between focusing tiling windows or floating windows
+bindsym $mod+space focus mode_toggle
+# float/unfloat focused window
+bindsym $mod+t floating toggle
+# focus the parent container
+bindsym $mod+$mod2+a focus parent
+# focus the child container
+bindsym $mod+$mod2+d focus child
+
+## Media
+bindsym XF86AudioRaiseVolume exec --no-startup-id /home/owner/.scripts/increase_volume.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id /home/owner/.scripts/decrease_volume.sh
+
+## Launchers
+bindsym $mod+a exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-workspace-renamer.sh"
+bindsym $mod+d exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-desktop-launcher.sh"
+bindsym $mod+s exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-workspace-selector.sh"
+bindsym $mod+$mod2+s exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-container-mover.sh"
+bindsym $mod+i exec --no-startup-id wezterm-start nvim -c "autocmd TextChanged,TextChangedI <buffer> silent write" /home/owner/sync/linux-config/symlinks/vim-temp.md
+bindsym $mod+o exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-clipboard.sh"
+bindsym $mod+p exec --no-startup-id /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-passwords.sh"
+bindsym $mod+Return exec --no-startup-id wezterm-start
+bindsym Print exec --no-startup-id /home/owner/.scripts/sway-screenshot.sh
+# dex is used so that mpv launch isn't in workspace where Pause is pressed
+bindsym Pause exec --no-startup-id dex /home/owner/.local/share/applications/streamlink-tab.desktop
+
+## Other
+bindsym $mod+$mod2+q kill
+bindsym $mod+$mod2+$mod3+q exec --no-startup-id wkill
+bindsym ctrl+space exec "makoctl dismiss"
+# reload the configuration file
+bindsym $mod+c reload
+
+# Modes
+## Resize
+mode resize {
+  bindsym h resize shrink width 5 px or 5 ppt
+  bindsym j resize grow height 5 px or 5 ppt
+  bindsym k resize shrink height 5 px or 5 ppt
+  bindsym l resize grow width 5 px or 5 ppt
+
+  bindsym Return mode default
+  bindsym Escape mode default
+  bindsym $mod+r mode default
+}
+bindsym $mod+r mode resize
+
+# Window rules
+for_window {
+  # Add XWayland to titles
+  [shell="xwayland"] title_format "%title [XWayland]"
+
+  # Center windows with launcher app_id
+  [app_id="^launcher$"] floating enable, border none, resize set width 40 ppt height 20 ppt, move position 30 ppt 30 ppt
+
+  # Inhibit idle for fullscreen windows in both X11 (class) and Wayland (app_id). Should not be necessary as the app should inhibit idle.
+  # [class="^.*"] inhibit_idle fullscreen
+  # [app_id="^.*"] inhibit_idle fullscreen
+
+  # Move windows
+  [class="Steam"] move container to workspace f
+  [class="Lutris"] move container to workspace f
+}
+
+# Bar config
+bar {
+  mode hide
+  modifier $mod
+  status_command i3status
+  tray_output primary
+}
+
+# Hardware config
+## Mouse
+input type:pointer {
+  accel_profile flat
+  pointer_accel 0
+  middle_emulation disabled
+}
+
+## Screens
+### t430
+output DP-1 mode 1920x1080@143.981003Hz
+### x1 carbon
+output DP-7 mode 2560x1440
+bindswitch lid:on output eDP-1 disable
+bindswitch lid:off output eDP-1 enable
+### vnc
+output Virtual-1 mode 1920x1080
+
+## Suspend broken on t430
+# exec --no-startup-id swayidle -w \
+    # timeout 1500 'swaymsg "output * dpms off"' \
+    # resume  'swaymsg "output * dpms on"'  \
+    # timeout 1800 'systemctl suspend'
+
+# Sway config
+## default to tabbed layout
+workspace_layout tabbed
+## hide borders
+default_border pixel 1
+hide_edge_borders --i3 both
+## hide mouse cursor
+seat * hide_cursor 3000
+## gaps inner 10
+
+# Startup
+## Needed for file picker to work in firefox
+exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec --no-startup-id "cd /home/owner/.wallpapers/ && /home/owner/.scripts/wallpapers.sh"
+exec --no-startup-id wl-paste -t text --watch clipman store
+exec --no-startup-id /home/owner/.scripts/startup.sh
+exec --no-startup-id /home/owner/.scripts/startup-desktop.sh
+exec --no-startup-id /home/owner/.scripts/startup-laptop.sh
+
+## VNC keyboard passthrough (this mode should only run on viewer/cient)
+mode passthrough {
+  bindsym $mod+Insert mode default; bar mode hide
+}
+bindsym $mod+Insert mode passthrough; bar mode invisible
