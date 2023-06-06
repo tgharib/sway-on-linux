@@ -168,6 +168,8 @@ seat * hide_cursor 3000
 # Startup
 ## Needed for file picker to work in firefox
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+## Needed for wayland gtk apps (such as firefox) to pickup correct theme. See https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland#setting-values-in-gsettings
+exec_always /home/owner/.scripts/set-gtk-theme.sh
 exec "cd /home/owner/.wallpapers/ && /home/owner/.scripts/wallpapers.sh"
 exec wl-paste -t text --watch clipman store
 exec /home/owner/.scripts/startup.sh
