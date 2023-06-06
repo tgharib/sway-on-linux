@@ -77,7 +77,7 @@ bindsym $mod+a exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launche
 bindsym $mod+d exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-desktop-launcher.sh"
 bindsym $mod+s exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-workspace-selector.sh"
 bindsym $mod+$mod2+s exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-container-mover.sh"
-bindsym $mod+i exec wezterm-start nvim -c "autocmd TextChanged,TextChangedI <buffer> silent write" /home/owner/sync/linux-config/symlinks/vim-temp.md
+bindsym $mod+i exec wezterm-start nvim -c "autocmd TextChanged,TextChangedI <buffer> silent write" /home/owner/files/vim-temp.md
 bindsym $mod+o exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-clipboard.sh"
 bindsym $mod+p exec /usr/bin/env dash -c "/home/owner/.scripts/sway-kill-launcher.sh; foot -a 'launcher' /home/owner/.scripts/sway-passwords.sh"
 bindsym $mod+Return exec wezterm-start
