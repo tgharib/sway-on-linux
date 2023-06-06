@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 setterm -linewrap off
 
-paths_spaced="/home/owner/.local/share/applications/ /nix/var/nix/profiles/per-user/owner/profile/share/applications/ /run/current-system/sw/share/applications/ /var/lib/flatpak/exports/share/applications/ /usr/share/applications/ /var/lib/snapd/desktop/applications/"
+paths_spaced="/home/owner/.local/share/applications/ /nix/var/nix/profiles/per-user/owner/profile/share/applications/ /run/current-system/sw/share/applications/ /var/lib/flatpak/exports/share/applications/ /usr/share/applications/"
 name=$(fd -e desktop . $paths_spaced | sd ".+/(.+)\.desktop" "\$1" | sort -u | fzf --prompt='Launch app: ')
 
 IFS=" "
