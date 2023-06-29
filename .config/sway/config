@@ -163,7 +163,7 @@ default_border pixel 1
 hide_edge_borders --i3 both
 ## hide mouse cursor
 seat * hide_cursor 3000
-## gaps inner 10
+gaps inner 4
 
 # Startup
 ## Needed for file picker to work in firefox
